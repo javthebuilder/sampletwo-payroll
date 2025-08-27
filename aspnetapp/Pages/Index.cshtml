@@ -1,4 +1,4 @@
-﻿@page
+﻿@page 
 @model IndexModel
 @using System.Runtime.InteropServices
 @using System.IO
@@ -15,11 +15,16 @@
     EnvironmentInfo env = new();
     const double Mebi = 1024 * 1024;
     const double Gibi = Mebi * 1024;
+    IConfiguration config;
 
-    HttpContext.Session.SetString("Username", "US:" + DateTime.Now);
-    HttpContext.Session.SetString("UserId", "UID:" + DateTime.Now);
-
-
+   
+   
+    if (HttpContext.Session.GetString("Username") == null)
+    {
+        HttpContext.Session.SetString("Username", "US:" + DateTime.Now);
+        HttpContext.Session.SetString("UserId", "UID:" + DateTime.Now);
+        
+    }
     var username = HttpContext.Session.GetString("Username");
     var userId = HttpContext.Session.GetInt32("UserId");
 
@@ -102,6 +107,12 @@
 
             </td>
         </tr>
+        <tr>
+            <td colspan="2"
+            >sample span
+                <button onclick="showMessage()">Click Me</button>
+            </td>
+        </tr>
     </table>
 </div>
 
@@ -123,4 +134,12 @@
             return $"{gibibytes:N2} GiB";
         }
     }
+   
+
 }
+
+<script>
+    function showMessage() {
+        alert("Button clicked!");
+    }
+</script>

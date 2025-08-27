@@ -1,3 +1,4 @@
+using MySql.Data.MySqlClient;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddHealthChecks();
 
+// Access connection string
+string connStr = builder.Configuration.GetConnectionString("MyDbConnection");
 // Uncomment if using System.Text.Json source generation
 // builder.Services.ConfigureHttpJsonOptions(options =>
 // {
@@ -22,6 +25,8 @@ builder.Services.AddSession(options =>
 });
 var app = builder.Build();
 
+
+
 app.MapHealthChecks("/healthz");
 
 // Configure the HTTP request pipeline.
@@ -30,6 +35,14 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+}
+
+
+// Example usage: test DB connection on startup
+using (var conn = new MySqlConnection(connStr))
+{
+    conn.Open();
+    Console.WriteLine("✅ Database connected!");
 }
 
 app.UseHttpsRedirection();
