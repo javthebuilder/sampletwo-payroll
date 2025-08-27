@@ -31,7 +31,7 @@
     var userId = HttpContext.Session.GetInt32("UserId");
 
     var msConnect = "";
-
+    var fromDb = "";
     string hostname = Dns.GetHostName();
     Console.WriteLine($"Server Hostname: {hostname}");
 
@@ -48,6 +48,35 @@
         {
             conn.Open();
             msConnect = " Database connected!";
+
+           
+                try
+                {
+                    conn.Open();
+
+                    string sql = "SELECT userid, lastname FROM user";
+
+                    using (var cmd = new MySqlCommand(sql, conn))
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                        fromDb += ($"{reader["userid"]} - {reader["lastname"]} ");
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                finally
+                {
+                    conn.Close();
+                }
+
+            
+
             conn.Close();
         }
         
@@ -68,6 +97,9 @@
         <tr>
             <td>Person InCharge @msConnect</td>
             <td>@person.Position @person.Name</td>
+        </tr>
+        <tr>
+            <td colspan="2">@fromDb</td>            
         </tr>
         <tr>
             <td>UserName</td>

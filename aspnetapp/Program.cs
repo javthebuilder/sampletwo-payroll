@@ -1,4 +1,5 @@
 using MySql.Data.MySqlClient;
+using System.Net;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,8 @@ builder.Services.AddHealthChecks();
 
 // Access connection string
 string connStr = builder.Configuration.GetConnectionString("MyDbConnection");
+
+
 // Uncomment if using System.Text.Json source generation
 // builder.Services.ConfigureHttpJsonOptions(options =>
 // {
@@ -49,6 +52,9 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 app.UseSession();
+
+
+
 
 CancellationTokenSource cancellation = new();
 app.Lifetime.ApplicationStopping.Register( () =>
