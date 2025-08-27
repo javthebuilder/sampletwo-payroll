@@ -18,6 +18,7 @@
     IConfiguration config;
 
    
+    var dummy = Environment.GetEnvironmentVariable("dummy_var ");
    
     if (HttpContext.Session.GetString("Username") == null)
     {
@@ -34,7 +35,7 @@
 
 
 <div class="text-center">
-    <h1>Welcome to .NET Version 9</h1>
+    <h1>Welcome to .NET Version 9 @dummy</h1>
 </div>
 
 <div align="center">
