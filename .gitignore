@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/aspnetapp/bin/Debug/net9.0
+/aspnetapp/obj
+/.vs/aspnetapp/config
+/.vs/aspnetapp/FileContentIndex
+/.vs/aspnetapp/v17
