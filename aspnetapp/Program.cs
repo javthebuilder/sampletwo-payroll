@@ -12,6 +12,14 @@ builder.Services.AddHealthChecks();
 //     options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonSerializerContext.Default);
 // });
 
+// ✅ Add session services
+builder.Services.AddDistributedMemoryCache(); // stores session in memory
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // session timeout
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true; // required for GDPR
+});
 var app = builder.Build();
 
 app.MapHealthChecks("/healthz");
@@ -32,6 +40,7 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
+app.UseSession();
 
 CancellationTokenSource cancellation = new();
 app.Lifetime.ApplicationStopping.Register( () =>

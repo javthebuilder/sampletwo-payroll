@@ -2,7 +2,13 @@
 @model PrivacyModel
 @{
     ViewData["Title"] = "Privacy Policy";
+
+
+    var username = HttpContext.Session.GetString("Username");
+    var userId = HttpContext.Session.GetInt32("UserId");
 }
 <h1>@ViewData["Title"]</h1>
 
 <p>Use this page to detail your site's privacy policy.</p>
+<h1>@userId</h1>
+<h1>@username</h1>

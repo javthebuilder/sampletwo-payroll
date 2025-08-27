@@ -15,7 +15,18 @@
     EnvironmentInfo env = new();
     const double Mebi = 1024 * 1024;
     const double Gibi = Mebi * 1024;
+
+    HttpContext.Session.SetString("Username", "US:" + DateTime.Now);
+    HttpContext.Session.SetString("UserId", "UID:" + DateTime.Now);
+
+
+    var username = HttpContext.Session.GetString("Username");
+    var userId = HttpContext.Session.GetInt32("UserId");
+
+   
+
 }
+
 
 <div class="text-center">
     <h1>Welcome to .NET Version 9</h1>
@@ -26,6 +37,14 @@
         <tr>
             <td>Person InCharge</td>
             <td>@person.Position @person.Name</td>
+        </tr>
+        <tr>
+            <td>UserName</td>
+            <td>@username</td>
+        </tr>
+        <tr>
+            <td>UserId</td>
+            <td>@userId</td>
         </tr>
         <tr>
             <td>.NET version</td>
