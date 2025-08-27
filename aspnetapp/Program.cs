@@ -38,15 +38,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 
-// Example usage: test DB connection on startup
-using (var conn = new MySqlConnection(
-    Environment.GetEnvironmentVariable("connection_string")
-  )
-)
-{
-    conn.Open();
-    Console.WriteLine("✅ Database connected!");
-}
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
