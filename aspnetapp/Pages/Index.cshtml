@@ -17,7 +17,7 @@
     EnvironmentInfo env = new();
     const double Mebi = 1024 * 1024;
     const double Gibi = Mebi * 1024;
-
+    List<Person> persons = new List<Person>();
 
     var dummy = Environment.GetEnvironmentVariable("dummy_var");
 
@@ -37,43 +37,49 @@
 
     if (hostname == "jav_au_lp")
     {
-        
+
+
     }else
     {
-       
+
         using (var conn = new MySqlConnection(
             Environment.GetEnvironmentVariable("connection_string")
           )
         )
         {
-            conn.Open();
-            msConnect = " Database connected!";
+            try
+            {
+                conn.Open();
 
-           
-                try
+                msConnect = " Database connected!";
+
+                string sql = "SELECT userid, lastname FROM user";
+
+                using (var cmd = new MySqlCommand(sql, conn))
+                using (var reader = cmd.ExecuteReader())
                 {
-                    conn.Open();
-
-                    string sql = "SELECT userid, lastname FROM user";
-
-                    using (var cmd = new MySqlCommand(sql, conn))
-                    using (var reader = cmd.ExecuteReader())
+                    while (reader.Read())
                     {
-                        while (reader.Read())
-                        {
-                        fromDb += ($"{reader["userid"]} - {reader["lastname"]} ");
-                        }
+
+                        persons.Add(new Person()
+                                {
+                                    Name = ($"{reader["userid"]}"),
+                                    Position = ($"{reader["lastname"]}")
+                                });
+
+                      
                     }
                 }
-                catch (Exception)
-                {
+            }
+            catch (Exception)
+            {
 
-                    throw;
-                }
-                finally
-                {
-                    conn.Close();
-                }
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
 
             
 
@@ -94,6 +100,14 @@
 
 <div align="center">
     <table class="table table-striped table-hover">
+        @foreach (var item in persons)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Position</td>
+            </tr>
+        }
+
         <tr>
             <td>Person InCharge @msConnect</td>
             <td>@person.Position @person.Name</td>
