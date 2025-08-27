@@ -3,10 +3,15 @@
 @using System.Runtime.InteropServices
 @using System.IO
 @using System.Diagnostics
+@using aspnetapp.Model
 @{
     ViewData["Title"] = "Welcome to .NET";
     string hostName = System.Net.Dns.GetHostName();
     var ipList = await System.Net.Dns.GetHostAddressesAsync(hostName);
+    Person person = new Person();
+    person.Name = "Rafael";
+    person.Position = "Captain II";
+
     EnvironmentInfo env = new();
     const double Mebi = 1024 * 1024;
     const double Gibi = Mebi * 1024;
@@ -18,6 +23,10 @@
 
 <div align="center">
     <table class="table table-striped table-hover">
+        <tr>
+            <td>Person InCharge</td>
+            <td>@person.Position @person.Name</td>
+        </tr>
         <tr>
             <td>.NET version</td>
             <td>@RuntimeInformation.FrameworkDescription</td>
