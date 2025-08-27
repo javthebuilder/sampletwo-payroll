@@ -7,8 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddHealthChecks();
 
-// Access connection string
-string connStr = builder.Configuration.GetConnectionString("MyDbConnection");
+
 // Uncomment if using System.Text.Json source generation
 // builder.Services.ConfigureHttpJsonOptions(options =>
 // {
@@ -38,12 +37,6 @@ if (!app.Environment.IsDevelopment())
 }
 
 
-// Example usage: test DB connection on startup
-using (var conn = new MySqlConnection(connStr))
-{
-    conn.Open();
-    Console.WriteLine("✅ Database connected!");
-}
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
